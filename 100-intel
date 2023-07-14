@@ -1,0 +1,17 @@
+#!/bin/bash
+# Check if $CFILE is set
+if [ -z "$CFILE" ]; then
+  echo "Error: CFILE variable is not set."
+  exit 1
+fi
+
+# Extract the file name without extension
+filename=$(basename "$CFILE" .c)
+
+# Generate the syntax of the C code
+gcc -fdump-tree-all "$CFILE" -o /dev/null
+
+# Move the syntax dump file to the desired output file
+mv "${filename}.c.001t.tu" "${filename}.s"
+
+echo "Syntax generated for $CFILE. Output file saved as ${filename}.s."
